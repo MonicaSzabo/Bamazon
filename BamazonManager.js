@@ -1,0 +1,98 @@
+var mysql = require('mysql');
+var inquirer = require('inquirer');
+var colors = require('colors');
+var Table = require('cli-table');
+
+var keys = require('./keys.js');		//Contains the host, port, user, password, and database to be used for in the mySQL database
+
+var connection = mysql.createConnection(keys.connection);
+
+connection.connect(function(err) {
+    if (err) throw err;
+});
+
+function selection() {
+	inquirer.prompt([
+		{
+			type: "rawlist",
+			message: "What would you like to do?",
+			choices: ["View Products for Sale", "View Low Inventory", "Add to Inventory", "Add New Product", "Exit"],
+			name: "action"
+		},
+	]).then(function (user) {
+		switch(user.action) {
+			case "View Products for Sale":
+				viewProducts();
+				break;
+			case "View Low Inventory":
+				viewLowInventory();
+				break;
+			case "Add to Inventory":
+				//addInventory();
+				break;
+			case "Add New Product":
+				//addNewProduct();
+				break;
+			case "Exit":
+				exit();
+				break;
+		}
+	});
+}
+
+function viewProducts() {
+	connection.query('SELECT * FROM products', function(err, res) {
+	    if (err) throw err;
+
+		var table = new Table({
+			head: ["Product ID".cyan, "Product Name".cyan, "Department Name".cyan, "Price".cyan, "Quantity".cyan],
+			colWidths: [13, 20, 20, 13, 13],
+		});
+		
+		for(var i = 0; i < res.length; i++) {
+			table.push(
+			    [res[i].itemID, res[i].ProductName, res[i].DepartmentName, res[i].Price, res[i].StockQuantity]
+			);
+		}
+		
+		console.log(table.toString());
+
+		selection();
+	});
+}
+
+function viewLowInventory() {
+	connection.query('SELECT * FROM products', function(err, res) {
+	    if (err) throw err;
+
+		var table = new Table({
+			head: ["Product ID".cyan, "Product Name".cyan, "Department Name".cyan, "Price".cyan, "Quantity".cyan],
+			colWidths: [13, 20, 20, 13, 13],
+		});
+		
+		for(var i = 0; i < res.length; i++) {
+			if(res[i].StockQuantity < 5) {		//Will only push products with less than 5 quantity
+				table.push(
+			    	[res[i].itemID, res[i].ProductName, res[i].DepartmentName, res[i].Price, res[i].StockQuantity]
+				);
+			}
+		}
+
+		if(table.length > 0) {
+	    	console.log("\nHere are low quantity products (less than 5):");		
+			console.log(table.toString());			
+		} else {
+			console.log("\nThere are no low quantity products right now!\n");
+		}
+
+		selection();
+	});
+}
+
+
+function exit() {
+	connection.end();
+	console.log("Good Bye!");
+}
+
+selection();

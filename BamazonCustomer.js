@@ -32,12 +32,12 @@ function selection() {
 		inquirer.prompt([
 			{
 				type: "number",
-				message: "Which item would you like to purchase? (the Product ID) ",
+				message: "Which item would you like to purchase? (the Product ID)",
 				name: "itemNumber"
 			},
 			{
 				type: "number",
-				message: "How many would you like to buy? ",
+				message: "How many would you like to buy?",
 				name: "howMany"
 			},
 		]).then(function (user) {
@@ -76,7 +76,7 @@ function orderMore() {
 	inquirer.prompt([
 		{
 			type: "confirm",
-			message: "Would you like to order anything else? ",
+			message: "Would you like to order anything else?",
 			name: "again"
 		},
 	]).then(function (user) {
