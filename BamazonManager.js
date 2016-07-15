@@ -12,6 +12,7 @@ connection.connect(function(err) {
 });
 
 function selection() {
+	console.log("");
 	inquirer.prompt([
 		{
 			type: "rawlist",
@@ -31,7 +32,7 @@ function selection() {
 				addInventory();
 				break;
 			case "Add New Product":
-				//addNewProduct();
+				addNewProduct();
 				break;
 			case "Exit":
 				exit();
@@ -129,6 +130,43 @@ function addInventory() {
 	    		selection();
 		    });
 
+		});
+	});
+}
+
+function addNewProduct() {
+	inquirer.prompt([
+	{
+		type: "input",
+		message: "What is the product name?",
+		name: "itemName"
+	},
+	{
+		type: "input",
+		message: "What department is it in?",
+		name: "itemDepartment"
+	},
+	{
+		type: "number",
+		message: "What is it's price?",
+		name: "itemPrice"
+	},
+	{
+		type: "number",
+		message: "How many do we have of this product?",
+		name: "itemQuantity"
+	},
+	]).then(function (user) {
+		connection.query("INSERT INTO products SET ?", {
+			ProductName: user.itemName,
+			DepartmentName: user.itemDepartment,
+			Price: user.itemPrice,
+			StockQuantity: user.itemQuantity
+		}, function(err, res) {
+			if(err) throw err;
+
+			console.log("\nYour product has been added!\n");
+			selection();
 		});
 	});
 }
