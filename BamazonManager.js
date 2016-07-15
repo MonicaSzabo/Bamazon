@@ -28,7 +28,7 @@ function selection() {
 				viewLowInventory();
 				break;
 			case "Add to Inventory":
-				//addInventory();
+				addInventory();
 				break;
 			case "Add New Product":
 				//addNewProduct();
@@ -89,6 +89,49 @@ function viewLowInventory() {
 	});
 }
 
+function addInventory() {
+	connection.query('SELECT * FROM products', function(err, res) {
+	    if (err) throw err;
+
+		var table = new Table({
+			head: ["Product ID".cyan, "Product Name".cyan, "Department Name".cyan, "Price".cyan, "Quantity".cyan],
+			colWidths: [13, 20, 20, 13, 13],
+		});
+		
+		for(var i = 0; i < res.length; i++) {
+			table.push(
+			    [res[i].itemID, res[i].ProductName, res[i].DepartmentName, res[i].Price, res[i].StockQuantity]
+			);
+		}
+		
+		console.log(table.toString());
+		inquirer.prompt([
+		{
+			type: "number",
+			message: "Which product would you like to add to? (the Product ID)",
+			name: "itemNumber"
+		},
+		{
+			type: "number",
+			message: "How many more would you like to add?",
+			name: "howMany"
+		},
+		]).then(function (user) {
+			var newQuantity = parseInt(res[user.itemNumber - 1].StockQuantity) + parseInt(user.howMany);
+			connection.query("UPDATE products SET ? WHERE ?", [{
+    			StockQuantity: newQuantity
+    		}, {
+    			itemID: user.itemNumber
+    		}], function(error, results) {
+    			if(error) throw error;
+
+	    		console.log("\nYour quantity has been updated!\n");
+	    		selection();
+		    });
+
+		});
+	});
+}
 
 function exit() {
 	connection.end();
