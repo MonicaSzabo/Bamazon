@@ -1,0 +1,32 @@
+{
+  "name": "bamazon",
+  "version": "1.0.0",
+  "description": "A node application to simulate Amazon using MySQL",
+  "main": "BamazonCustomer.js",
+  "dependencies": {
+    "colors": "^1.1.2",
+    "mysql": "^2.11.1",
+    "inquirer": "^1.1.2",
+    "cli-table": "^0.3.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MonicaSzabo/Bamazon.git"
+  },
+  "keywords": [
+    "bamazon",
+    "amazon",
+    "mysql",
+    "node"
+  ],
+  "author": "Monica Szabo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MonicaSzabo/Bamazon/issues"
+  },
+  "homepage": "https://github.com/MonicaSzabo/Bamazon#readme"
+}
