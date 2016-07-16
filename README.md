@@ -12,7 +12,7 @@ exports.connection = {
 };
 ```
 
-You will also need to run **npm install** to get the right packages from the package.json.
+You will also need to run **npm install** to get the right packages from the package.json
 
 ## BamazonCustomer.js
 
@@ -30,4 +30,3 @@ You will also need to run **npm install** to get the right packages from the pac
 - run **node BamazonExecutive.js**
 	-  Follow the prompts to oversee the departments in your Bamazon store!
 	-  You can view the products by the department and see how much they're making or create a new department
-	
