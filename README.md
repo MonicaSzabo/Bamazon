@@ -32,7 +32,6 @@ You will also need to run **npm install** to get the right packages from the pac
 
 - run **node BamazonManager.js**
 	-  Follow the prompts to "manage" your Bamazon store!
-	-  You can view the products, view which products have low inventory, add to the inventory, and add a new product
 
 	-  You can view the products that are available to sell:
 	![Example Manager 1](/images/manager01.png)
@@ -40,17 +39,16 @@ You will also need to run **npm install** to get the right packages from the pac
 	-  You can view the products with low quantity (below 5):
 	![Example Manager 2](/images/manager02.png)
 
-	-  You can add product to your store (picture is before and after the add):
+	-  You can add product to your store:
 	![Example Manager 3](/images/manager03.png)
 
-	-  You can add a new product to your store (picture is before and after the add):
+	-  You can add a new product to your store:
 	![Example Manager 4](/images/manager04.png)
 
 ## BamazonExecutive.js
 
 - run **node BamazonExecutive.js**
 	-  Follow the prompts to oversee the departments in your Bamazon store!
-	-  You can view the products by the department and see how much they're making or create a new department
 
 	-  You can view the departments, their costs, their sales, and how much money they are making:
 	![Example Executive 1](/images/executive01.png)
