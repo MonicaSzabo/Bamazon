@@ -52,7 +52,7 @@ function viewProducts() {
 		
 		for(var i = 0; i < res.length; i++) {
 			table.push(
-			    [res[i].itemID, res[i].ProductName, res[i].DepartmentName, res[i].Price, res[i].StockQuantity]
+			    [res[i].itemID, res[i].ProductName, res[i].DepartmentName, parseFloat(res[i].Price).toFixed(2), res[i].StockQuantity]
 			);
 		}
 		
@@ -74,7 +74,7 @@ function viewLowInventory() {
 		for(var i = 0; i < res.length; i++) {
 			if(res[i].StockQuantity < 5) {		//Will only push products with less than 5 quantity
 				table.push(
-			    	[res[i].itemID, res[i].ProductName, res[i].DepartmentName, res[i].Price, res[i].StockQuantity]
+			    	[res[i].itemID, res[i].ProductName, res[i].DepartmentName, parseFloat(res[i].Price).toFixed(2), res[i].StockQuantity]
 				);
 			}
 		}
@@ -101,7 +101,7 @@ function addInventory() {
 		
 		for(var i = 0; i < res.length; i++) {
 			table.push(
-			    [res[i].itemID, res[i].ProductName, res[i].DepartmentName, res[i].Price, res[i].StockQuantity]
+			    [res[i].itemID, res[i].ProductName, res[i].DepartmentName, parseFloat(res[i].Price).toFixed(2), res[i].StockQuantity]
 			);
 		}
 		

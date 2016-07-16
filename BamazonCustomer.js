@@ -23,7 +23,7 @@ function selection() {
 		
 		for(var i = 0; i < res.length; i++) {
 			table.push(
-			    [res[i].itemID, res[i].ProductName, res[i].DepartmentName, res[i].Price, res[i].StockQuantity]
+			    [res[i].itemID, res[i].ProductName, res[i].DepartmentName, parseFloat(res[i].Price).toFixed(2), res[i].StockQuantity]
 			);
 		}
 		
@@ -42,11 +42,22 @@ function selection() {
 			},
 		]).then(function (user) {
 
-			connection.query('SELECT * FROM products', function(err, res) {
+			connection.query('SELECT * FROM products JOIN departments ON products.DepartmentName = departments.DepartmentName', function(err, res) {
 		    	if (err) throw err;
 
 		    	if(res[user.itemNumber - 1].StockQuantity > user.howMany) {
 		    		var newQuantity = parseInt(res[user.itemNumber - 1].StockQuantity) - parseInt(user.howMany);
+		    		var total = parseFloat(user.howMany) * parseFloat(res[user.itemNumber - 1].Price);
+			    	total = total.toFixed(2);
+
+			    	var departmentTotal = parseFloat(total) + parseFloat(res[user.itemNumber - 1].TotalSales);
+			    	departmentTotal = departmentTotal.toFixed(2);
+
+	    			connection.query("UPDATE departments SET ? WHERE ?", [{
+		    			TotalSales: departmentTotal
+		    		}, {
+		    			DepartmentName: res[user.itemNumber - 1].DepartmentName
+		    		}], function(error, results) {});
 
 		    		connection.query("UPDATE products SET ? WHERE ?", [{
 		    			StockQuantity: newQuantity
@@ -57,8 +68,6 @@ function selection() {
 
 			    		console.log("Your order for " + user.howMany + " " + res[user.itemNumber - 1].ProductName +
 			    			"(s) has been placed.");
-			    		var total = parseFloat(user.howMany) * parseFloat(res[user.itemNumber - 1].Price);
-			    		total = total.toFixed(2);
 			    		console.log("Your total is $" + total);
 			    		orderMore();
 		    		});
